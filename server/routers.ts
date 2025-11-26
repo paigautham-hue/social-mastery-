@@ -2,10 +2,16 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { coachRouter } from "./routers/coach";
+import { learnRouter } from "./routers/learn";
+import { practiceRouter } from "./routers/practice";
+import { trackRouter } from "./routers/track";
+import { discoverRouter } from "./routers/discover";
+import { profileRouter } from "./routers/profile";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
+  
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -17,12 +23,13 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  // Module routers
+  coach: coachRouter,      // AI Coaching
+  learn: learnRouter,      // Learning paths & lessons
+  practice: practiceRouter, // Interactive tools
+  track: trackRouter,      // Progress tracking
+  discover: discoverRouter, // Community features
+  profile: profileRouter,  // User profile
 });
 
 export type AppRouter = typeof appRouter;
