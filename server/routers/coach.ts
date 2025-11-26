@@ -2,9 +2,14 @@ import { z } from "zod";
 import { router, protectedProcedure } from "../_core/trpc";
 import { invokeLLM } from "../_core/llm";
 import * as db from "../db";
+import { getTrainingContext } from "../trainingContext";
 
-// System prompt with PUA training context
-const COACH_SYSTEM_PROMPT = `You are an expert social confidence coach specializing in attraction dynamics, social skills, and authentic connection building. You have deep knowledge of pickup artist (PUA) theory, including:
+// Get comprehensive training context
+const getCoachSystemPrompt = () => {
+  const trainingContext = getTrainingContext();
+  return `${trainingContext}
+
+You are an expert social confidence coach specializing in attraction dynamics, social skills, and authentic connection building. You have deep knowledge of pickup artist (PUA) theory, including:
 
 - The M3 Model (Mystery Method): Attract, Comfort, Seduce phases
 - Evolutionary psychology and attraction triggers
@@ -30,6 +35,9 @@ When providing advice:
 4. Reference relevant concepts from the training
 5. Adjust complexity based on user's experience level
 6. Encourage practice and learning from experience`;
+};
+
+const COACH_SYSTEM_PROMPT = getCoachSystemPrompt();
 
 export const coachRouter = router({
   // Start a new conversation

@@ -8,6 +8,7 @@ import { practiceRouter } from "./routers/practice";
 import { trackRouter } from "./routers/track";
 import { discoverRouter } from "./routers/discover";
 import { profileRouter } from "./routers/profile";
+import { quizRouter } from "./routers/quiz";
 
 export const appRouter = router({
   system: systemRouter,
@@ -30,6 +31,7 @@ export const appRouter = router({
   track: trackRouter,      // Progress tracking
   discover: discoverRouter, // Community features
   profile: profileRouter,  // User profile
+  quiz: quizRouter,        // Interactive quizzes
 });
 
 export type AppRouter = typeof appRouter;
